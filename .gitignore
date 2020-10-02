@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs
+/BankLogic/bin/Debug/netstandard2.0
+/BankLogic/obj
+/BankWinForm/.vs/BankWinForm/v16
+/BankWinForm/obj/Debug

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankWinForm", "BankWinForm.csproj", "{E16DC4FE-F377-4772-9278-606C8A128E4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankLogic", "..\BankLogic\BankLogic.csproj", "{3EE8F92C-F63F-40CD-8F88-B3A193719CE2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E16DC4FE-F377-4772-9278-606C8A128E4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E16DC4FE-F377-4772-9278-606C8A128E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E16DC4FE-F377-4772-9278-606C8A128E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E16DC4FE-F377-4772-9278-606C8A128E4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EE8F92C-F63F-40CD-8F88-B3A193719CE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EE8F92C-F63F-40CD-8F88-B3A193719CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EE8F92C-F63F-40CD-8F88-B3A193719CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EE8F92C-F63F-40CD-8F88-B3A193719CE2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C8403A8D-248F-45BD-93B9-7E2260AD4908}
+	EndGlobalSection
+EndGlobal
