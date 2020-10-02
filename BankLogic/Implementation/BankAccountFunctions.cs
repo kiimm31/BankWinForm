@@ -5,13 +5,20 @@ using System.Text;
 
 namespace BankLogic
 {
-    public class BankAccountFunctions
+    public class BankAccountFunctions : IBankAccountFunctions
     {
         private readonly IDatabaseFunctions _databaseFunctions;
+        private readonly IDocumentFunctions _documentFunctions;
 
         public BankAccountFunctions(IDatabaseFunctions databaseFunctions)
         {
             _databaseFunctions = databaseFunctions;
+            _documentFunctions = new DocumentFunctions(_databaseFunctions);
+        }
+
+        public IEnumerable<BankAccountDTO> ViewAllBankAccounts()
+        {
+            return _databaseFunctions.GetAllBankAccount();
         }
 
         public int CreateNewAccount(BankAccountDTO backAccountDTO)
@@ -24,7 +31,7 @@ namespace BankLogic
             return _databaseFunctions.GetBackAccountDTO(bankAccountId);
         }
 
-        public DocumentDTO ViewAccountAddressDocument(int documentId)
+        public DocumentDTO ViewAccountDocument(int documentId)
         {
             return _databaseFunctions.GetDocumentDTO(documentId);
         }
@@ -35,7 +42,7 @@ namespace BankLogic
             {
                 BankAccountId = bankAccountId,
                 TransactionAmount = amount,
-                TransactionDateTime = new DateTimeOffset(DateTime.Now),
+                TransactionDateTime = DateTime.Now,
                 TransactionType = PublicEnum.TransactionType.Withdraw
             };
 
@@ -48,7 +55,7 @@ namespace BankLogic
             {
                 BankAccountId = bankAccountId,
                 TransactionAmount = amount,
-                TransactionDateTime = new DateTimeOffset(DateTime.Now),
+                TransactionDateTime = DateTime.Now,
                 TransactionType = PublicEnum.TransactionType.Deposit
             };
 
@@ -60,9 +67,9 @@ namespace BankLogic
             return _databaseFunctions.GetBankTransactionDTOs(bankAccountId);
         }
 
-        public bool LoginUser(UserLoginDTO userLoginDTO)
+        public int UploadDocument(string filePath)
         {
-
+            return _documentFunctions.UploadDocument(filePath);
         }
     }
 }

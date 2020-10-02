@@ -15,11 +15,11 @@ namespace BankLogic
         private readonly string _connectionString;
         private readonly string _filePath;
 
-        public DatabaseFunctions(string connectionString)
+        public DatabaseFunctions(string filePath)
         {
-            _connectionString = connectionString;
-            SQLiteConnectionStringBuilder sQLiteConnectionStringBuilder = new SQLiteConnectionStringBuilder(_connectionString);
-            _filePath = sQLiteConnectionStringBuilder.DataSource;
+            _filePath = filePath;
+            _connectionString = $"Data Source={_filePath}";
+            InitialiseDatabase();
         }
 
         public void InitialiseDatabase()
@@ -32,28 +32,29 @@ namespace BankLogic
                 }
 
 
-                string createBankAccountDB = $@"CREATE TABLE [IF NOT EXISTS] BankAccount (
+                string createBankAccountDB = $@"CREATE TABLE IF NOT EXISTS BankAccount (
 	ID INTEGER PRIMARY KEY,
    	FirstName TEXT NOT NULL,
 	LastName TEXT NOT NULL,
     Email TEXT NOT NULL UNIQUE,
 	MobileNumber TEXT NOT NULL UNIQUE,
     IDNumber TEXT NOT NULL UNIQUE,
-    DateOfBirth TEXT NOT NULL,
+    DateOfBirth DATETIME NOT NULL,
     Address TEXT NOT NULL,
     BankAccountType INTEGER NOT NULL,
     IdentificationProofDocumentId INTEGER NOT NULL,
     AddressProofDocumentId INTEGER NOT NULL,
     IsDeleted INTEGER NOT NULL DEFAULT 0
 )";
-                string createDocumentDB = $@"CREATE TABLE [IF NOT EXISTS] Document (
+                string createDocumentDB = $@"CREATE TABLE IF NOT EXISTS Document (
 	ID INTEGER PRIMARY KEY,
     HexString TEXT NOT NULL,
+    Extension TEXT NOT NULL,
     IsDeleted INTEGER NOT NULL DEFAULT 0
 )";
-                string createTransactionDB = $@"CREATE TABLE [IF NOT EXISTS] BankTransaction (
+                string createTransactionDB = $@"CREATE TABLE IF NOT EXISTS BankTransaction (
 	ID INTEGER PRIMARY KEY,
-    TransactionDateTime TEXT NOT NULL,
+    TransactionDateTime DATETIME NOT NULL,
     BankAccountId INTEGER NOT NULL,
     TransactionAmount REAL NOT NULL,
     TransactionType INTEGAR NOT NULL,
@@ -71,7 +72,7 @@ namespace BankLogic
             using (IDbConnection connection = new SQLiteConnection(_connectionString))
             {
                 string insertQuery = $@"INSERT INTO BankAccount (FirstName,LastName,Email,MobileNumber,IDNumber,DateOfBirth,Address,BankAccountType,IdentificationProofDocumentId,AddressProofDocumentId,IsDeleted) 
-VALUES ('{backAccountDTO.FirstName}', '{backAccountDTO.LastName}', '{backAccountDTO.Email}', '{backAccountDTO.MobileNumber}', '{backAccountDTO.IDNumber}','{backAccountDTO.DateOfBirth}','{backAccountDTO.Address}', '{(int)backAccountDTO.BankAccountType}','{backAccountDTO.IdentificationProofDocumentId}', '{backAccountDTO.AddressProofDocumentId}',0 );
+VALUES ('{backAccountDTO.FirstName}', '{backAccountDTO.LastName}', '{backAccountDTO.Email}', '{backAccountDTO.MobileNumber}', '{backAccountDTO.IDNumber}','{backAccountDTO.DateOfBirth.ToString("yyyy-MM-dd HH:mm:ss.fff")}','{backAccountDTO.Address}', '{(int)backAccountDTO.BankAccountType}','{backAccountDTO.IdentificationProofDocumentId}', '{backAccountDTO.AddressProofDocumentId}',0 );
 SELECT last_insert_rowid();";
 
                 int accountIdInserted = connection.QueryFirstOrDefault<int>(insertQuery);
@@ -84,8 +85,8 @@ SELECT last_insert_rowid();";
         {
             using (IDbConnection connection = new SQLiteConnection(_connectionString))
             {
-                string insertQuery = $@"INSERT INTO BankTransaction (TransactionDateTime,,BankAccountId,TransactionAmount,TransactionType,IsDeleted) 
-VALUES ('{bankTransactionDTO.TransactionDateTime}','{bankTransactionDTO.BankAccountId}',{bankTransactionDTO.TransactionAmount},{(int)bankTransactionDTO.TransactionType},0)";
+                string insertQuery = $@"INSERT INTO BankTransaction (TransactionDateTime,BankAccountId,TransactionAmount,TransactionType,IsDeleted) 
+VALUES ('{bankTransactionDTO.TransactionDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff")}','{bankTransactionDTO.BankAccountId}',{bankTransactionDTO.TransactionAmount},{(int)bankTransactionDTO.TransactionType},0)";
 
                 connection.Execute(insertQuery);
             }
@@ -95,7 +96,7 @@ VALUES ('{bankTransactionDTO.TransactionDateTime}','{bankTransactionDTO.BankAcco
         {
             using (IDbConnection connection = new SQLiteConnection(_connectionString))
             {
-                string insertQuery = $@"INSERT INTO Document (HexString,IsDeleted) VALUES ('{documentDTO.HexString}',0) ;
+                string insertQuery = $@"INSERT INTO Document (HexString,Extension,IsDeleted) VALUES ('{documentDTO.HexString}','{documentDTO.Extension}',0) ;
 SELECT last_insert_rowid();";
 
                 return connection.QueryFirstOrDefault<int>(insertQuery);
@@ -136,7 +137,21 @@ SELECT last_insert_rowid();";
         {
             using (IDbConnection connection = new SQLiteConnection(_connectionString))
             {
-                string query = $@"SELECT * FROM BankAccount WHERE IsDeleted = 0";
+                string query = $@"select 
+ID
+,FirstName
+,LastName
+,IDNumber
+,DateOfBirth
+,Address
+,BankAccountType
+,IdentificationProofDocumentId
+,AddressProofDocumentId
+,MobileNumber
+,Email
+,IsDeleted
+from BankAccount
+Where IsDeleted = 0";
 
                 return connection.Query<BankAccountDTO>(query);
             }

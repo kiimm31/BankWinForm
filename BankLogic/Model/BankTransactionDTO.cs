@@ -8,7 +8,7 @@ namespace BankLogic.Model
     public class BankTransactionDTO
     {
         public int ID { get; set; }
-        public DateTimeOffset TransactionDateTime { get; set; }
+        public DateTime TransactionDateTime { get; set; }
         public int BankAccountId { get; set; }
         public double TransactionAmount { get; set; }
         public TransactionType TransactionType { get; set; }

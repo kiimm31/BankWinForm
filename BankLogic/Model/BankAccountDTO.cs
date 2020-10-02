@@ -8,12 +8,11 @@ namespace BankLogic.Model
 {
     public class BankAccountDTO
     {
-        private readonly DateTimeOffset _CreatedDateTime;
         public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string IDNumber { get; set; }
-        public DateTimeOffset DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public string Address { get; set; }
         public BankType BankAccountType { get; set; }
         public int IdentificationProofDocumentId { get; set; }
@@ -22,9 +21,10 @@ namespace BankLogic.Model
         public string Email { get; set; }
         public bool IsDeleted { get; set; }
 
+        private readonly DateTime _CreatedDateTime;
         public BankAccountDTO()
         {
-            _CreatedDateTime = new DateTimeOffset(DateTime.Now);
+            _CreatedDateTime = DateTime.Now;
         }
     }
 }

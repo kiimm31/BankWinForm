@@ -8,6 +8,7 @@ namespace BankLogic.Model
     {
         public int DocumentId { get; set; }
         public string HexString { get; set; }
+        public string Extension { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
