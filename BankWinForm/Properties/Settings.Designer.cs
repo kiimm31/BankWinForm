@@ -26,12 +26,12 @@ namespace BankWinForm.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\KimHung\\Documents\\Test.db")]
-        public string ConnectionString {
+        public string SqliteFilePath {
             get {
-                return ((string)(this["ConnectionString"]));
+                return ((string)(this["SqliteFilePath"]));
             }
             set {
-                this["ConnectionString"] = value;
+                this["SqliteFilePath"] = value;
             }
         }
     }

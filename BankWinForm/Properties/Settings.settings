@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BankWinForm.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ConnectionString" Type="System.String" Scope="User">
+    <Setting Name="SqliteFilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Users\KimHung\Documents\Test.db</Value>
     </Setting>
   </Settings>
