@@ -7,3 +7,5 @@
 /BankLogic/obj
 /BankWinForm/.vs/BankWinForm/v16
 /BankWinForm/obj/Debug
+/BankWinForm/bin/Debug
+/BankWinForm/packages
